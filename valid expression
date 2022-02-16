@@ -1,0 +1,26 @@
+bool valid(string s)
+{
+    unordered_map<char,int> umap={ {'(',1}, {')',2}, {'{',3}, {'}',4}, {'[',5}, {']',6} };
+    
+    int n=s.size();
+    stack<char> st;
+    for(int i=0;i<n;i++)
+    {
+        if(umap[s[i]]==1 or umap[s[i]]==3 or umap[s[i]]==5  )
+        st.push(s[i]);
+        else if(umap[s[i]]==2 or umap[s[i]]==4 or umap[s[i]]==6 ){
+            
+            if(st.empty())
+            return false;
+            
+            if( umap[st.top()] + 1==umap[s[i]]  )
+            st.pop();
+        }
+    }
+    
+    if(!st.empty())
+    return false;
+    
+    return true;
+    // code here
+}
