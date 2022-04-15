@@ -1,0 +1,26 @@
+best approach on2 time and on space ( space modification )
+	int LongestRepeatingSubsequence(string str){
+		    // Code 
+		    int n=str.size();
+		    vector<int> row(n+1,0);
+		    
+		    for(int i=1;i<=n;i++)
+		    {
+		        vector<int> temp=row;
+		        for(int j=1;j<=n;j++)
+		        {
+		            if(str[i-1]==str[j-1] and i!=j )
+		            row[j]=1+temp[j-1];
+		            else
+		            {
+		                row[j]=max(row[j-1],temp[j] );
+		                
+		            }
+		            
+		        }		        
+
+		    }
+		    
+		    return row[n];
+		    
+		}
