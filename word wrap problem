@@ -1,0 +1,43 @@
+#define INF 1e8 
+class Solution {
+public:
+
+    int solveWordWrap(vector<int>nums, int k) 
+    { 
+        int n=nums.size();
+        int extras[n+1][n+1];
+        for(int i=1;i<=n;i++)
+        {
+            extras[i][i]=k-nums[i-1];
+            for(int j=i+1;j<=n;j++)
+            {
+                extras[i][j]=extras[i][j-1]-nums[j-1]-1;
+            }
+        }
+        int lc[n+1][n+1];
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
+            {
+                if(j==n and extras[i][j]>=0)
+                lc[i][j]=0;
+                else if(extras[i][j]<0)
+                lc[i][j]=INF;
+                else
+                lc[i][j]=extras[i][j]*extras[i][j];
+            }
+        }
+        int cost[n+1];
+        cost[0]=0;
+        for(int i=1;i<=n;i++)
+        {
+            cost[i]=INF;
+            for(int j=1;j<=i;j++)
+            {
+                if(cost[j-1]!=INF and lc[j][i]!=INF and ( cost[j-1]+lc[j][i]<cost[i] ) )
+                cost[i]=cost[j-1]+lc[j][i];
+            }
+        }
+        return cost[n];
+        // Code here
+    } 
